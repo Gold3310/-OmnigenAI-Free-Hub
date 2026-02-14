@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Image Generation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>AI Image Generation and Gallery</h1>
+    </header>
+
+    <main>
+        <section aria-labelledby="image-gen">
+            <h2 id="image-gen">Image Generation</h2>
+            <form id="genForm" aria-describedby="genDesc">
+                <p id="genDesc">Upload an image and choose options to generate a new image.</p>
+                <label for="imageUpload">Select Image:</label>
+                <input type="file" id="imageUpload" aria-required="true" accept="image/*" required>
+                <button type="submit">Generate Image</button>
+                <div id="statusMessage" aria-live="polite"></div>
+            </form>
+        </section>
+
+        <section aria-labelledby="gallery">
+            <h2 id="gallery">Gallery</h2>
+            <div id="imageGallery" role="grid" aria-labelledby="gallery">
+                <!-- Gallery items will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AI Image Application</p>
+    </footer>
+
+    <script>
+        document.getElementById('genForm').onsubmit = function(event) {
+            event.preventDefault();
+            const fileInput = document.getElementById('imageUpload');
+            if (fileInput.files.length === 0) {
+                document.getElementById('statusMessage').innerText = 'Please select an image.';
+                return;
+            }
+            // Mockup of image generation process
+            document.getElementById('statusMessage').innerText = 'Generating image...';
+            // Add logic for image generation and update gallery
+        };
+    </script>
+</body>
+</html>
