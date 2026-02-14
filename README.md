@@ -1,152 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OmnigenAI Free Hub - Live AI</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-body { font-family:'Inter',sans-serif; background:#050505; color:#e5e5e5; margin:0; padding:0;}
-.glass { background:rgba(20,20,20,0.7); backdrop-filter:blur(12px); border:1px solid rgba(255,255,255,0.1); padding:12px; margin:10px; border-radius:12px;}
-button { background:#4f46e5; color:white; border:none; padding:10px 16px; border-radius:8px; cursor:pointer; margin-top:10px; }
-img { max-width:100%; border-radius:12px; display:block; margin-top:10px;}
-</style>
-</head>
-<body>
+# OmnigenAI Free Hub
 
-<h1>OmnigenAI Free Hub - Live AI</h1>
+Welcome to the OmnigenAI Free Hub! This repository provides a collection of resources and tools for utilizing the OmnigenAI technology effectively.
 
-<!-- Image Generation Section -->
-<div class="glass">
-<h2>Live AI Image Generation</h2>
-<textarea id="prompt-input" rows="3" style="width:100%;border-radius:8px;padding:5px;" placeholder="Type prompt here..."></textarea>
-<button onclick="generateAndSaveImage()">Generate & Save Image</button>
-<img id="result-img" style="display:none;">
-<p id="gen-status" style="color:#aaa;"></p>
-</div>
+## Table of Contents
+1. [Installation](#installation)
+2. [Usage](#usage)
+3. [Features](#features)
+4. [Contributing](#contributing)
+5. [License](#license)
 
-<!-- Upscaler Section -->
-<div class="glass">
-<h2>Upscaler</h2>
-<input type="file" id="upscale-upload">
-<button onclick="upscaleAndSave()">Upscale & Save</button>
-<img id="upscale-result" style="display:none;">
-</div>
+## Installation
+To install the necessary dependencies, please follow these instructions:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Gold3310/-OmnigenAI-Free-Hub.git
+   ```
+2. Navigate to the project directory:
+   ```bash
+   cd -OmnigenAI-Free-Hub
+   ```
+3. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-<!-- Gallery Section -->
-<div class="glass">
-<h2>Gallery</h2>
-<div id="gallery"></div>
-</div>
+## Usage
+To use the tools provided in this repository, simply execute the desired script or command. For example:
 
-<!-- AI Design Assistant -->
-<div class="glass">
-<h2>AI Design Assistant</h2>
-<p>Type a prompt and get simple feedback:</p>
-<input type="text" id="assistant-input" placeholder="Ask a question..." style="width:100%; padding:5px; border-radius:6px;">
-<button onclick="sendAssistantMessage()">Send</button>
-<div id="assistant-messages"></div>
-</div>
+```bash
+python example_script.py
+```
 
-<script>
-// ------------------ Live AI Image Generation ------------------
-async function generateAndSaveImage(){
-    const prompt=document.getElementById("prompt-input").value.trim();
-    if(!prompt){alert("Please type a prompt."); return;}
-    const img=document.getElementById("result-img");
-    const status=document.getElementById("gen-status");
-    status.textContent="Generating...";
-    
-    try{
-        // free and live Hugging Face endpoint for free usage (Stable Diffusion)
-        const response=await fetch("https://hf.space/embed/akhaliq/StableDiffusionAPI/+/api/predict",{
-            method:"POST",
-            headers:{"Content-Type":"application/json"},
-            body: JSON.stringify({data:[prompt]})
-        });
-        const data=await response.json();
-        // data.data[0] contains Base64 image
-        const b64=data.data[0];
-        const url="data:image/png;base64,"+b64;
-        img.src=url; img.style.display='block';
-        saveToGallery(url);
-        status.textContent="Image generated successfully!";
-    }catch(e){
-        console.error(e);
-        status.textContent="Failed to generate image. Using placeholder...";
-        const seed=Math.floor(Math.random()*1000);
-        const url=`https://images.unsplash.com/photo-${1600000000000+seed}?auto=format&fit=crop&q=80&w=800&sig=${seed}`;
-        img.src=url; img.style.display='block';
-        saveToGallery(url);
-    }
-}
+Ensure you have the required environment variables set if necessary.
 
-// ------------------ Upscaler Simulation (Offline) ------------------
-function upscaleAndSave(){
-    const fileInput=document.getElementById("upscale-upload");
-    if(!fileInput.files.length){alert("Select an image!"); return;}
-    const reader=new FileReader();
-    reader.onload=function(e){
-        const imgData=e.target.result;
-        // For demonstration: just show same image
-        const upImg=document.getElementById("upscale-result");
-        upImg.src=imgData; upImg.style.display='block';
-        saveToGallery(imgData);
-    };
-    reader.readAsDataURL(fileInput.files[0]);
-}
+## Features
+- Feature 1: Description of feature 1
+- Feature 2: Description of feature 2
+- Feature 3: Description of feature 3
 
-// ------------------ IndexedDB Gallery ------------------
-function saveToGallery(url){
-    if(!window.indexedDB){alert("Browser does not support IndexedDB"); return;}
-    const request=indexedDB.open("OmnigenGallery",1);
-    request.onupgradeneeded=function(e){
-        e.target.result.createObjectStore("images",{autoIncrement:true});
-    };
-    request.onsuccess=function(e){
-        const db=e.target.result;
-        const tx=db.transaction("images","readwrite");
-        tx.objectStore("images").add(url);
-        tx.oncomplete=function(){ db.close(); loadGallery(); };
-    };
-}
+## Contributing
+We welcome contributions! Please follow these steps to contribute:
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature/YourFeature
+   ```
+3. Make your changes and commit them:
+   ```bash
+   git commit -m "Add your message here"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature/YourFeature
+   ```
+5. Open a pull request.
 
-function loadGallery(){
-    const container=document.getElementById("gallery");
-    container.innerHTML='';
-    const request=indexedDB.open("OmnigenGallery",1);
-    request.onsuccess=function(e){
-        const db=e.target.result;
-        const tx=db.transaction("images","readonly");
-        const store=tx.objectStore("images");
-        store.openCursor().onsuccess=function(event){
-            const cursor=event.target.result;
-            if(cursor){
-                const img=document.createElement("img");
-                img.src=cursor.value;
-                img.style.margin="5px"; img.style.maxWidth="120px";
-                container.appendChild(img);
-                cursor.continue();
-            }
-        };
-    };
-}
-window.onload=loadGallery;
+## License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-// ------------------ AI Assistant ------------------
-function sendAssistantMessage(){
-    const input=document.getElementById("assistant-input");
-    const val=input.value.trim();
-    if(!val) return;
-    const messages=document.getElementById("assistant-messages");
-    const div=document.createElement("div");
-    div.style.background="rgba(79,70,229,0.2)";
-    div.style.margin="5px 0"; div.style.padding="5px"; div.style.borderRadius="6px";
-    div.textContent="Assistant: " + val.split("").reverse().join(""); //free and live response
-    messages.appendChild(div);
-    input.value="";
-}
+---
 
-</script>
-</body>
-</html>
+**Note:** Make sure to update your documentation regularly and follow best practices for coding and repository management.
+
+---
+
+For any issues or queries, please open an issue in the repository, and we will assist you promptly!
