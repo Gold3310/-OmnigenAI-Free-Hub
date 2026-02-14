@@ -3,75 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Omnigen AI Hub</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Advanced AI Image Editing</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+        header { background-color: #4CAF50; padding: 10px; color: white; text-align: center; }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+        }
+        nav a {
+            padding: 14px 20px;
+            text-decoration: none;
+            color: white;
+            text-align: center;
+        }
+        nav a:hover { background-color: #ddd; color: black; }
+        .container { padding: 20px; }
+    </style>
 </head>
 <body>
     <header>
-        <h1>Omnigen AI Image Generation Hub</h1>
-        <nav>
-            <ul>
-                <li><a href="#image-gen">Image Generation</a></li>
-                <li><a href="#upscaler">Image Upscaler</a></li>
-                <li><a href="#gallery">Gallery</a></li>
-                <li><a href="#design-assistant">Design Assistant</a></li>
-            </ul>
-        </nav>
+        <h1>Advanced AI Image Editing Features</h1>
     </header>
-
-    <main>
-        <section id="image-gen">
-            <h2>AI Image Generation</h2>
-            <input type="text" id="imagePrompt" placeholder="Enter prompt for image generation...">
-            <button id="generateBtn">Generate Image</button>
-            <div id="generatedImage"></div>
+    <nav>
+        <a href="#image-generation">Image Generation</a>
+        <a href="#inpainting">Inpainting with Brush Selection</a>
+        <a href="#head-swap">Head Swap</a>
+        <a href="#clothes-change">Clothes Change</a>
+        <a href="#background-change">Background Removal/Change</a>
+    </nav>
+    <div class="container">
+        <section id="image-generation">
+            <h2>Image Generation</h2>
+            <p>Feature description for Image Generation goes here.</p>
         </section>
-
-        <section id="upscaler">
-            <h2>Image Upscaler</h2>
-            <input type="file" id="imageUpload" accept="image/*">
-            <button id="upscaleBtn">Upscale Image</button>
-            <div id="upscaledImage"></div>
+        <section id="inpainting">
+            <h2>Inpainting with Brush Selection</h2>
+            <p>Feature description for Inpainting goes here.</p>
         </section>
-
-        <section id="gallery">
-            <h2>Image Gallery</h2>
-            <div id="imageGallery"></div>
+        <section id="head-swap">
+            <h2>Head Swap</h2>
+            <p>Feature description for Head Swap goes here.</p>
         </section>
-
-        <section id="design-assistant">
-            <h2>Design Assistant</h2>
-            <textarea id="designInput" placeholder="Describe your design needs..."></textarea>
-            <button id="designBtn">Get Design Ideas</button>
-            <div id="designIdeas"></div>
+        <section id="clothes-change">
+            <h2>Clothes Change</h2>
+            <p>Feature description for Clothes Change goes here.</p>
         </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2026 Omnigen AI Hub</p>
-    </footer>
-
-    <script>
-        document.getElementById('generateBtn').addEventListener('click', function() {
-            const prompt = document.getElementById('imagePrompt').value;
-            // Simulate image generation
-            document.getElementById('generatedImage').innerHTML = `<img src='https://via.placeholder.com/300?text=${encodeURIComponent(prompt)}' alt='Generated Image'>`;
-        });
-
-        document.getElementById('upscaleBtn').addEventListener('click', function() {
-            const fileInput = document.getElementById('imageUpload');
-            if (fileInput.files.length > 0) {
-                const fileURL = URL.createObjectURL(fileInput.files[0]);
-                document.getElementById('upscaledImage').innerHTML = `<img src='${fileURL}' alt='Upscaled Image'>`;
-            } else {
-                alert('Please upload an image to upscale.');
-            }
-        });
-
-        document.getElementById('designBtn').addEventListener('click', function() {
-            const designNeeds = document.getElementById('designInput').value;
-            document.getElementById('designIdeas').innerText = `Here are some design ideas for: ${designNeeds}`;
-        });
-    </script>
+        <section id="background-change">
+            <h2>Background Removal/Change</h2>
+            <p>Feature description for Background Removal/Change goes here.</p>
+        </section>
+    </div>
 </body>
 </html>
