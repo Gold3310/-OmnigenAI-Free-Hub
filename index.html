@@ -3,50 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Image Generation</title>
+    <title>Omnigen AI Hub</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>AI Image Generation and Gallery</h1>
+        <h1>Omnigen AI Image Generation Hub</h1>
+        <nav>
+            <ul>
+                <li><a href="#image-gen">Image Generation</a></li>
+                <li><a href="#upscaler">Image Upscaler</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#design-assistant">Design Assistant</a></li>
+            </ul>
+        </nav>
     </header>
 
     <main>
-        <section aria-labelledby="image-gen">
-            <h2 id="image-gen">Image Generation</h2>
-            <form id="genForm" aria-describedby="genDesc">
-                <p id="genDesc">Upload an image and choose options to generate a new image.</p>
-                <label for="imageUpload">Select Image:</label>
-                <input type="file" id="imageUpload" aria-required="true" accept="image/*" required>
-                <button type="submit">Generate Image</button>
-                <div id="statusMessage" aria-live="polite"></div>
-            </form>
+        <section id="image-gen">
+            <h2>AI Image Generation</h2>
+            <input type="text" id="imagePrompt" placeholder="Enter prompt for image generation...">
+            <button id="generateBtn">Generate Image</button>
+            <div id="generatedImage"></div>
         </section>
 
-        <section aria-labelledby="gallery">
-            <h2 id="gallery">Gallery</h2>
-            <div id="imageGallery" role="grid" aria-labelledby="gallery">
-                <!-- Gallery items will be dynamically added here -->
-            </div>
+        <section id="upscaler">
+            <h2>Image Upscaler</h2>
+            <input type="file" id="imageUpload" accept="image/*">
+            <button id="upscaleBtn">Upscale Image</button>
+            <div id="upscaledImage"></div>
+        </section>
+
+        <section id="gallery">
+            <h2>Image Gallery</h2>
+            <div id="imageGallery"></div>
+        </section>
+
+        <section id="design-assistant">
+            <h2>Design Assistant</h2>
+            <textarea id="designInput" placeholder="Describe your design needs..."></textarea>
+            <button id="designBtn">Get Design Ideas</button>
+            <div id="designIdeas"></div>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 AI Image Application</p>
+        <p>&copy; 2026 Omnigen AI Hub</p>
     </footer>
 
     <script>
-        document.getElementById('genForm').onsubmit = function(event) {
-            event.preventDefault();
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const prompt = document.getElementById('imagePrompt').value;
+            // Simulate image generation
+            document.getElementById('generatedImage').innerHTML = `<img src='https://via.placeholder.com/300?text=${encodeURIComponent(prompt)}' alt='Generated Image'>`;
+        });
+
+        document.getElementById('upscaleBtn').addEventListener('click', function() {
             const fileInput = document.getElementById('imageUpload');
-            if (fileInput.files.length === 0) {
-                document.getElementById('statusMessage').innerText = 'Please select an image.';
-                return;
+            if (fileInput.files.length > 0) {
+                const fileURL = URL.createObjectURL(fileInput.files[0]);
+                document.getElementById('upscaledImage').innerHTML = `<img src='${fileURL}' alt='Upscaled Image'>`;
+            } else {
+                alert('Please upload an image to upscale.');
             }
-            // Mockup of image generation process
-            document.getElementById('statusMessage').innerText = 'Generating image...';
-            // Add logic for image generation and update gallery
-        };
+        });
+
+        document.getElementById('designBtn').addEventListener('click', function() {
+            const designNeeds = document.getElementById('designInput').value;
+            document.getElementById('designIdeas').innerText = `Here are some design ideas for: ${designNeeds}`;
+        });
     </script>
 </body>
 </html>
